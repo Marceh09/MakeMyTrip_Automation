@@ -1,17 +1,16 @@
-package setUpTest;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
+import java.time.Duration;
 
-public class SetUpSeleniumTest {
+public class YoutubeTest {
+
     static WebDriver driver;
 
     /**
@@ -20,31 +19,29 @@ public class SetUpSeleniumTest {
     @BeforeTest
     static void setUpClass() {
         WebDriverManager.edgedriver().setup();
-        //ChromeOptions options = new ChromeOptions();
-        //options.addArguments("--headless");
         driver = new EdgeDriver();
+        driver.manage().window().maximize();
+
     }
-
-
-    /**
-     * This is the test case the idea is that you can modify some lines to know how it works
-     */
     @Test
-    public void openGoogle() {
-        // Exercise
-        driver.get("https://google.com");
+    public void openYouTube() {
+        // Exercise: Replay YouTube video
+        driver.get("https://youtube.com");
         String title = driver.getTitle();
-        WebElement search = driver.findElement(By.name("q"));
+        WebElement search = driver.findElement(By.name("search_query"));
 
-        search.sendKeys("Hola mundo");
+        search.sendKeys("rush");
         search.submit();
 
-        //String title = driver.getTitle();
+        //Implicit wait
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+
+        WebElement song = driver.findElement(By.xpath("/html/body/ytd-app/div[1]/ytd-page-manager/ytd-search/div[1]/ytd-two-column-search-results-renderer/div/ytd-section-list-renderer/div[2]/ytd-item-section-renderer/div[3]/ytd-video-renderer[1]/div[1]/ytd-thumbnail/a/yt-image/img"));
+        song.click();
 
         // Verify
-        Assert.assertEquals("Google", title);
+        Assert.assertEquals("YouTube", title);
     }
-
     /**
      * This is to close the browser and finish the session
      */
@@ -52,5 +49,4 @@ public class SetUpSeleniumTest {
     void tearDown() {
         driver.quit();
     }
-
 }
