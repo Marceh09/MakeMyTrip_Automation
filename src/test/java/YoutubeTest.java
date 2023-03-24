@@ -21,8 +21,8 @@ public class YoutubeTest {
         WebDriverManager.edgedriver().setup();
         driver = new EdgeDriver();
         driver.manage().window().maximize();
-
     }
+
     @Test
     public void openYouTube() {
         // Exercise: Replay YouTube video
@@ -36,12 +36,13 @@ public class YoutubeTest {
         //Implicit wait
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
 
-        WebElement song = driver.findElement(By.xpath("/html/body/ytd-app/div[1]/ytd-page-manager/ytd-search/div[1]/ytd-two-column-search-results-renderer/div/ytd-section-list-renderer/div[2]/ytd-item-section-renderer/div[3]/ytd-video-renderer[1]/div[1]/ytd-thumbnail/a/yt-image/img"));
+        WebElement song = driver.findElement(By.cssSelector("a[href=\"/watch?v=crtQSTYWtqE\"]"));
         song.click();
 
         // Verify
         Assert.assertEquals("YouTube", title);
     }
+
     /**
      * This is to close the browser and finish the session
      */

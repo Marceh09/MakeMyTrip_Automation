@@ -10,6 +10,126 @@ public class MakeMyTripHome extends Base {
             super(driver);
         }
 
+        public By getFlightMenuOption() {
+                return flightMenuOption;
+        }
+
+        public By getFlightMenuIcon() {
+                return flightMenuIcon;
+        }
+
+        public By getFlightMenuLabel() {
+                return flightMenuLabel;
+        }
+
+        public By getHotelsMenuOption() {
+                return hotelsMenuOption;
+        }
+
+        public By getHotelsMenuIcon() {
+                return hotelsMenuIcon;
+        }
+
+        public By getHotelsMenuLabel() {
+                return hotelsMenuLabel;
+        }
+
+        public By getHometaysMenuOption() {
+                return hometaysMenuOption;
+        }
+
+        public By getHometaysMenuIcon() {
+                return hometaysMenuIcon;
+        }
+
+        public By getHometaysMenuLabel() {
+                return hometaysMenuLabel;
+        }
+
+        public By getHolidaysMenuOption() {
+                return holidaysMenuOption;
+        }
+
+        public By getHolidaysMenuIcon() {
+                return holidaysMenuIcon;
+        }
+
+        public By getHolidaysMenuLabel() {
+                return holidaysMenuLabel;
+        }
+
+        public By getTrainsMenuOption() {
+                return trainsMenuOption;
+        }
+
+        public By getTrainsMenuIcon() {
+                return trainsMenuIcon;
+        }
+
+        public By getTrainsMenuLabel() {
+                return trainsMenuLabel;
+        }
+
+        public By getBusesMenuOption() {
+                return busesMenuOption;
+        }
+
+        public By getBusesMenuIcon() {
+                return busesMenuIcon;
+        }
+
+        public By getBusesMenuLabel() {
+                return busesMenuLabel;
+        }
+
+        public By getCabsMenuOption() {
+                return cabsMenuOption;
+        }
+
+        public By getCabsMenuIcon() {
+                return cabsMenuIcon;
+        }
+
+        public By getCabsMenuLabel() {
+                return cabsMenuLabel;
+        }
+
+        public By getForexMenuOption() {
+                return forexMenuOption;
+        }
+
+        public By getForexMenuIcon() {
+                return forexMenuIcon;
+        }
+
+        public By getForexMenuLabel() {
+                return forexMenuLabel;
+        }
+
+        public By getCharterFlightsMenuOption() {
+                return charterFlightsMenuOption;
+        }
+
+        public By getCharterFlightsMenuIcon() {
+                return charterFlightsMenuIcon;
+        }
+
+        public By getCharterFlightsMenuLabel() {
+                return charterFlightsMenuLabel;
+        }
+
+        public By getActivitiesMenuOption() {
+                return activitiesMenuOption;
+        }
+
+        public By getActivitiesMenuIcon() {
+                return activitiesMenuIcon;
+        }
+
+        public By getActivitiesMenuLabel() {
+                return activitiesMenuLabel;
+        }
+
         //Flights
         By flightMenuOption = By.className("menu_Flights");
         By flightMenuIcon = By.cssSelector("a .chFlights");
