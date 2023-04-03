@@ -4,6 +4,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import java.util.List;
+
 public class Base {
     //Object WebDriver
     private WebDriver driver;
@@ -19,7 +21,11 @@ public class Base {
         return driver.findElement(locator);
     }
 
-    public void click(By lacator){
-        driver.findElement(lacator).click();
+    public void click(By locator){
+        driver.findElement(locator).click();
+    }
+
+    public List<WebElement> findElements(By locator){
+        return driver.findElements(locator);
     }
 }
