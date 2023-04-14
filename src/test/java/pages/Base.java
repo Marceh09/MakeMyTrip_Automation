@@ -25,7 +25,33 @@ public class Base {
         driver.findElement(locator).click();
     }
 
+    public void click(WebElement element){
+        element.click();
+    }
+
     public List<WebElement> findElements(By locator){
         return driver.findElements(locator);
+    }
+
+    //Returns the element text passed as a parameter
+    public String getText(WebElement element){
+        return element.getText();
+    }
+
+    //Returns the text of the element searched for through the locator
+    public String getText(By locator){
+        return driver.findElement(locator).getText();
+    }
+
+    public  void type(String inputText, By locator){
+        driver.findElement(locator).sendKeys(inputText);
+    }
+
+    public Boolean isDisplayed(By locator) {
+        try {
+            return driver.findElement(locator).isDisplayed();
+        } catch (org.openqa.selenium.NoSuchElementException e) {
+            return false;
+        }
     }
 }
