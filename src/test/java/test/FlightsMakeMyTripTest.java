@@ -37,25 +37,37 @@ public class FlightsMakeMyTripTest {
 
     @Test
     public void testDropDownList(){
+        flightsMakeMytrip.closeAdvertising();
         flightsMakeMytrip.clickFromOption();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
         List<WebElement> lista = flightsMakeMytrip.getFromList();
-        System.out.println("Tamaño de la lista: "+lista.size());
-        System.out.println(lista.get(2).getText().split("\n", 0)[0]);
+
+        for (WebElement optionListFrom : lista) {
+            if (optionListFrom.getText().contains("Dubai")) {
+                optionListFrom.click();
+                break;
+            }
+            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
+        }
+
+        Assert.assertTrue(flightsMakeMytrip.isFromCityOption(), "Dubai");
     }
 
     @Test
     public void testToList(){
+        flightsMakeMytrip.closeAdvertising();
         flightsMakeMytrip.clickToOption();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
         List<WebElement> lista = flightsMakeMytrip.getToList();
         System.out.println(lista.size());
         System.out.println(lista.get(2).getText().split("\n", 0)[0]);
+
+        Assert.assertTrue(flightsMakeMytrip.isToCityOption(), "Bangkok");
     }
 
     @AfterTest
     void tearDown(){
-        //driver.quit();
+        driver.quit();
     }
 }
 

@@ -3,12 +3,16 @@ package pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.edge.EdgeOptions;
 
+import java.time.Duration;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class Base {
     //Object WebDriver
-    private WebDriver driver;
+    protected WebDriver driver;
 
     //Builder
     //parameter->object WebDriver
@@ -47,11 +51,34 @@ public class Base {
         driver.findElement(locator).sendKeys(inputText);
     }
 
+    //Method verifies if a certain element is present and displayed
     public Boolean isDisplayed(By locator) {
         try {
             return driver.findElement(locator).isDisplayed();
         } catch (org.openqa.selenium.NoSuchElementException e) {
             return false;
         }
+    }
+
+    //method web server connection
+    public WebDriver edgeDriverSetUpHome() {
+        EdgeOptions edgeOptions = new EdgeOptions();
+        edgeOptions.addArguments("--remote-allow-origins=*","ignore-certificate-errors");
+        driver = new EdgeDriver(edgeOptions);
+        return driver;
+    }
+
+    //Method to switch DOM
+    public void switchToIframe(By locator){
+        WebElement iframe = findElement(locator);
+        driver.switchTo().frame(iframe);
+    }
+
+    public void defaultContent(){
+        driver.switchTo().defaultContent();
+    }
+
+    public void time(){
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
     }
 }

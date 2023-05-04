@@ -3,8 +3,8 @@ package pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.Select;
 
+import java.time.Duration;
 import java.util.List;
 
 
@@ -63,6 +63,11 @@ public class FlightsMakeMyTripComp extends Base {
     //Button search
     By searchBtn = By.cssSelector("p[data-cy='submit']>a");
 
+    //Iframe locators
+    By iframe = By.name("notification-frame-3177563c");
+    By closePublicity = By.id("webklipper-publisher-widget-container-notification-close-div");
+    By publicityTwo = By.id("root");
+
     public FlightsMakeMyTripComp(WebDriver driver) {
         super(driver);
     }
@@ -95,6 +100,7 @@ public class FlightsMakeMyTripComp extends Base {
         click(fromOption);
     }
 
+    //method verifies if the element FromCity is present and displayed
     public boolean isFromCityOption() {
         return isDisplayed(fromCityOption);
     }
@@ -116,11 +122,12 @@ public class FlightsMakeMyTripComp extends Base {
     }
 
     public void clickToOption() {
-         click(toOption);
+        click(toOption);
     }
 
-    public By getToCityOption() {
-        return toCityOption;
+    //Method verifies if the element ToCity is present and displayed
+    public boolean isToCityOption() {
+        return isDisplayed(toCityOption);
     }
 
     public By getToAirportOption() {
@@ -187,4 +194,10 @@ public class FlightsMakeMyTripComp extends Base {
         return searchBtn;
     }
 
+    public void closeAdvertising(){
+        switchToIframe(iframe);
+        click(closePublicity);
+        defaultContent();
+        click(publicityTwo);
+    }
 }
