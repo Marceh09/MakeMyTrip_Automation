@@ -1,13 +1,8 @@
 package test;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.edge.EdgeDriver;
-import org.openqa.selenium.edge.EdgeOptions;
-import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeClass;
@@ -18,32 +13,25 @@ import pages.FlightsMakeMyTripComp;
 import java.time.Duration;
 import java.util.List;
 
-public class FlightsMakeMyTripTest {
-
-    static WebDriver driver;
+public class FlightsMakeMyTripTest extends BaseTest {
     static FlightsMakeMyTripComp flightsMakeMytrip;
 
-    @BeforeTest
-    public void setUp(){
-        WebDriverManager.edgedriver().setup();
-        EdgeOptions edgeOptions = new EdgeOptions();
-        edgeOptions.addArguments("--remote-allow-origins=*");
-        driver = new EdgeDriver(edgeOptions);
+    @BeforeClass
+    public void initPage(){
         flightsMakeMytrip = new FlightsMakeMyTripComp(driver);
-        driver.manage().window().maximize();
-        driver.get("https://www.makemytrip.com/");
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(4));
+        flightsMakeMytrip.wait(5);
+        flightsMakeMytrip.closeAdvertising();
     }
 
     @Test
     public void testDropDownList(){
-        flightsMakeMytrip.closeAdvertising();
+        //flightsMakeMytrip.closeAdvertising();
         flightsMakeMytrip.clickFromOption();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
         List<WebElement> lista = flightsMakeMytrip.getFromList();
-
         for (WebElement optionListFrom : lista) {
             if (optionListFrom.getText().contains("Dubai")) {
+                driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
                 optionListFrom.click();
                 break;
             }
@@ -55,7 +43,7 @@ public class FlightsMakeMyTripTest {
 
     @Test
     public void testToList(){
-        flightsMakeMytrip.closeAdvertising();
+        //flightsMakeMytrip.closeAdvertising();
         flightsMakeMytrip.clickToOption();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
         List<WebElement> lista = flightsMakeMytrip.getToList();
@@ -64,6 +52,18 @@ public class FlightsMakeMyTripTest {
 
         Assert.assertTrue(flightsMakeMytrip.isToCityOption(), "Bangkok");
     }
+
+    @Test
+    public void testSelectFlights(){
+        //flightsMakeMytrip.closeAdvertising();
+        flightsMakeMytrip.selectFromOption();
+        flightsMakeMytrip.selectToOption();
+        flightsMakeMytrip.selectDepartureOption();
+        flightsMakeMytrip.selectReturnOption();
+        flightsMakeMytrip.selectTravellersOption();
+    }
+
+    
 
     @AfterTest
     void tearDown(){
