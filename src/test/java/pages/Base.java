@@ -78,7 +78,8 @@ public class Base {
         driver.switchTo().defaultContent();
     }
 
-    public void time(){
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
+    //Waiting method
+    public void wait(int time){
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(time));
     }
 }

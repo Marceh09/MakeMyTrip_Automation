@@ -1,12 +1,8 @@
 package test;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
-import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import pages.FlightsMakeMyTripComp;
 
@@ -14,21 +10,22 @@ import java.time.Duration;
 import java.util.List;
 
 public class FlightsMakeMyTripTest extends BaseTest {
-    static FlightsMakeMyTripComp flightsMakeMytrip;
+    static FlightsMakeMyTripComp flightsMakeMyTrip;
 
     @BeforeClass
     public void initPage(){
-        flightsMakeMytrip = new FlightsMakeMyTripComp(driver);
-        flightsMakeMytrip.wait(5);
-        flightsMakeMytrip.closeAdvertising();
+        flightsMakeMyTrip = new FlightsMakeMyTripComp(driver);
+        flightsMakeMyTrip.wait(5);
+        //flightsMakeMyTrip.closeIframe();
+        flightsMakeMyTrip.verifyAndCloseModal();
+
     }
 
     @Test
     public void testDropDownList(){
-        //flightsMakeMytrip.closeAdvertising();
-        flightsMakeMytrip.clickFromOption();
+        flightsMakeMyTrip.clickFromOption();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
-        List<WebElement> lista = flightsMakeMytrip.getFromList();
+        List<WebElement> lista = flightsMakeMyTrip.getFromList();
         for (WebElement optionListFrom : lista) {
             if (optionListFrom.getText().contains("Dubai")) {
                 driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
@@ -38,36 +35,28 @@ public class FlightsMakeMyTripTest extends BaseTest {
             driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
         }
 
-        Assert.assertTrue(flightsMakeMytrip.isFromCityOption(), "Dubai");
+        Assert.assertTrue(flightsMakeMyTrip.isFromCityOption(), "Dubai");
     }
 
     @Test
     public void testToList(){
-        //flightsMakeMytrip.closeAdvertising();
-        flightsMakeMytrip.clickToOption();
+        flightsMakeMyTrip.clickToOption();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
-        List<WebElement> lista = flightsMakeMytrip.getToList();
-        System.out.println(lista.size());
-        System.out.println(lista.get(2).getText().split("\n", 0)[0]);
+        List<WebElement> toList = flightsMakeMyTrip.getToList();
+        System.out.println(toList.size());
+        System.out.println(toList.get(2).getText().split("\n", 0)[0]);
 
-        Assert.assertTrue(flightsMakeMytrip.isToCityOption(), "Bangkok");
+        Assert.assertTrue(flightsMakeMyTrip.isToCityOption(), "Bangkok");
     }
 
     @Test
     public void testSelectFlights(){
-        //flightsMakeMytrip.closeAdvertising();
-        flightsMakeMytrip.selectFromOption();
-        flightsMakeMytrip.selectToOption();
-        flightsMakeMytrip.selectDepartureOption();
-        flightsMakeMytrip.selectReturnOption();
-        flightsMakeMytrip.selectTravellersOption();
-    }
-
-    
-
-    @AfterTest
-    void tearDown(){
-        driver.quit();
+        flightsMakeMyTrip.selectFromOption();
+        flightsMakeMyTrip.selectToOption();
+        flightsMakeMyTrip.selectDepartureOption();
+        flightsMakeMyTrip.selectReturnOption();
+        flightsMakeMyTrip.selectTravellersOption();
+        flightsMakeMyTrip.clickSearchBtn();
     }
 }
 

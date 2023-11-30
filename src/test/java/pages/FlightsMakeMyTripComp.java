@@ -3,8 +3,8 @@ package pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.testng.Assert;
 
-import java.time.Duration;
 import java.util.List;
 
 
@@ -45,14 +45,20 @@ public class FlightsMakeMyTripComp extends Base {
 
     //Return locator
     By returnOption = By.cssSelector("div[data-cy='returnArea'] span");
-    By returnDataOption = By.cssSelector("p[data-cy='returnDefaultText']");
+    By returnDaySelect = By.cssSelector("div[class='dateInnerCell']");
+    By returnDataOption = By.cssSelector("p[data-cy='returnDate']");
 
 
     //Travellers & class locator
-    By travellersOption = By.id("label[for='travellers']>span");
-    By travellersDateOption = By.cssSelector("p[data-cy='travellerText'] >span");
+    By travellersOption = By.cssSelector("div[data-cy='flightTraveller']");
+    By travelernumberOption = By.cssSelector("ul[class='guestCounter font12 darkText gbCounter'] li");
+    By travellersDateOption = By.cssSelector("span[data-cy='travellerText']");
     By travelClassOption = By.cssSelector("p.appendBottom1");
     By travelOffers = By.cssSelector("div[class='introGBFlt'] p");
+
+
+    //Button Apply
+    By btnApply = By.xpath("//button[contains(text(), 'APPLY')]");
 
 
     //Fare type
@@ -64,9 +70,14 @@ public class FlightsMakeMyTripComp extends Base {
     By searchBtn = By.cssSelector("p[data-cy='submit']>a");
 
     //Iframe locators
-    By iframe = By.name("notification-frame-3177563c");
-    By closePublicity = By.id("webklipper-publisher-widget-container-notification-close-div");
-    By publicityTwo = By.id("root");
+    By iframe = By.name("notification-frame-~55850c31");
+    By closeIframe = By.id("webklipper-publisher-widget-container-notification-close-div");
+
+
+    //advertising Modal locator:
+    By advertisingModal = By.cssSelector("div[class='imageSlideContainer']");
+    By advertisingModalClose = By.className("commonModal__close");
+
 
     public FlightsMakeMyTripComp(WebDriver driver) {
         super(driver);
@@ -96,11 +107,13 @@ public class FlightsMakeMyTripComp extends Base {
         return multiCityTripRadioBtn;
     }
 
+    //Method click from option
     public void clickFromOption() {
         click(fromOption);
+        wait(2);
     }
 
-    //method verifies if the element FromCity is present and displayed
+    //Method verifies if the element FromCity is present and displayed
     public boolean isFromCityOption() {
         return isDisplayed(fromCityOption);
     }
@@ -117,12 +130,15 @@ public class FlightsMakeMyTripComp extends Base {
         return fromSearch;
     }
 
+    //List of from elements
     public List<WebElement> getFromList() {
         return findElements(fromList);
     }
 
+    //Method click to option
     public void clickToOption() {
         click(toOption);
+        wait(2);
     }
 
     //Method verifies if the element ToCity is present and displayed
@@ -138,40 +154,52 @@ public class FlightsMakeMyTripComp extends Base {
         return toSearch;
     }
 
+    //List of to elements
     public List<WebElement> getToList() {
         return findElements(toList);
     }
 
-    public By getDeparturebtn() {
-        return departurebtn;
+    public void clickDepartureBtn() {
+        click(departurebtn);
     }
 
-    public By getDepartureDateOption() {
-        return departureDateOption;
+    public boolean isDepartureDateOption() {
+        return isDisplayed(departureDateOption);
     }
 
     public By getDepartureDayOption() {
         return departureDayOption;
     }
 
-    public By getDepartureSelectDay() {
-        return departureSelectDay;
+    //Lit of Departure day element
+    public List<WebElement> getDepartureSelectDay() {
+        return findElements(departureSelectDay);
     }
 
-    public By getReturnOption() {
-        return returnOption;
+    public void clickReturnOption() {
+        click(returnOption);
     }
 
-    public By getReturnDataOption() {
-        return returnDataOption;
+    //List return day elements
+    public List<WebElement> getReturnDaySelect() {
+        return findElements(returnDaySelect);
     }
 
-    public By getTravellersOption() {
-        return travellersOption;
+    public boolean isReturnDataOption() {
+        return isDisplayed(returnDataOption);
     }
 
-    public By getTravellersDateOption() {
-        return travellersDateOption;
+    public void clickTravellersOption() {
+        click(travellersOption);
+    }
+
+    //List of traveler number elements
+    public List<WebElement> getTravelerNumberOption() {
+        return findElements(travelernumberOption);
+    }
+
+    public boolean isTravellersDateOption() {
+        return isDisplayed(travellersDateOption);
     }
 
     public By getTravelClassOption() {
@@ -182,6 +210,10 @@ public class FlightsMakeMyTripComp extends Base {
         return travelOffers;
     }
 
+    public void clickBtnApply() {
+        click(btnApply);
+    }
+
     public By getFareTypeOptions() {
         return fareTypeOptions;
     }
@@ -190,14 +222,110 @@ public class FlightsMakeMyTripComp extends Base {
         return trendingOptions;
     }
 
-    public By getSearchBtn() {
-        return searchBtn;
+    //Method click Search flight button
+    public void clickSearchBtn() {
+        click(searchBtn);
     }
 
-    public void closeAdvertising(){
+    //Click method closes modal
+    public void clickAdvertisingModalCLose() {
+        click(advertisingModalClose);
+    }
+
+    //Method verifies if the modal is visible
+    public boolean isAdvertisingModal() {
+        return isDisplayed(advertisingModal);
+    }
+
+    //Method to close the iframe
+    public void closeIframe() {
         switchToIframe(iframe);
-        click(closePublicity);
+        click(closeIframe);
         defaultContent();
-        click(publicityTwo);
+    }
+
+    //Method verifies if the modal is visible and close it
+    public void verifyAndCloseModal() {
+        if (isAdvertisingModal()) {
+            wait(2);
+            clickAdvertisingModalCLose();
+        }
+    }
+
+    //Method select the from option
+    public void selectFromOption(){
+        clickFromOption();
+        List<WebElement> fromList = getFromList();
+        for (WebElement optionFromList : fromList) {
+            if (optionFromList.getText().contains("Dubai")) {
+                wait(2);
+                optionFromList.click();
+                break;
+            }
+            wait(2);
+        }
+
+        Assert.assertTrue(isFromCityOption(), "Dubai");
+    }
+
+    //Method select to option
+    public void selectToOption(){
+        clickToOption();
+        List<WebElement> toList = getToList();
+        for (WebElement optionToList : toList){
+            if (optionToList.getText().contains("Pune")) {
+                wait(2);
+                optionToList.click();
+                break;
+            }
+            wait(2);
+        }
+        Assert.assertTrue(isToCityOption(), "Pune");
+    }
+
+    //Method departure option
+    public void selectDepartureOption(){
+        clickDepartureBtn();
+        List<WebElement> departureList = getDepartureSelectDay();
+        for (WebElement dayDepartureList : departureList){
+            if (dayDepartureList.getText().contains("20")){
+                wait(2);
+                dayDepartureList.click();
+                break;
+            }
+            wait(2);
+        }
+        Assert.assertTrue(isDepartureDateOption(),"20");
+    }
+
+    //Method select return option
+    public void selectReturnOption(){
+        clickReturnOption();
+        List<WebElement> returnList = getReturnDaySelect();
+        for (WebElement dayReturnList : returnList) {
+            if (dayReturnList.getText().contains("25")){
+                wait(2);
+                dayReturnList.click();
+                break;
+            }
+            wait(2);
+        }
+        Assert.assertTrue(isReturnDataOption(),"25");
+    }
+
+    //Method select travellers option
+    public void selectTravellersOption(){
+        clickTravellersOption();
+        List<WebElement> travellersList = getTravelerNumberOption();
+        for (WebElement travelersNumberList : travellersList) {
+            if (travelersNumberList.getText().contains("2")) {
+                wait(2);
+                travelersNumberList.click();
+                clickBtnApply();
+                break;
+            }
+            wait(2);
+        }
+        Assert.assertTrue(isTravellersDateOption(), "2");
     }
 }

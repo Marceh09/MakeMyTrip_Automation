@@ -25,7 +25,6 @@ public class w3schoolTest {
         driver = w3Schools.edgeDriverSetUpHome();
         driver.manage().window().maximize();
         driver.get("https://www.w3schools.com/");
-        w3Schools.time();
     }
 
     @Test
