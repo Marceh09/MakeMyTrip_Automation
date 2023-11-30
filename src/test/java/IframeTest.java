@@ -8,15 +8,19 @@ import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
+import pages.Base;
+
 import java.time.Duration;
 
-public class YoutubeTest {
+import static org.bouncycastle.crypto.tls.HashAlgorithm.getText;
+
+public class IframeTest {
 
     static WebDriver driver;
+    By iframe = By.cssSelector("iframe[src='default.asp']");
 
-    /**
-     * This method init the driver in order to manage the browser
-     */
+    //By cssTitle = By.xpath("//h1[contains(text(), 'CSS')]");
+
     @BeforeTest
     static void setUpClass() {
         EdgeOptions edgeOptions = new EdgeOptions();
@@ -26,30 +30,18 @@ public class YoutubeTest {
     }
 
     @Test
-    public void openYouTube() {
-        // Exercise: Replay YouTube video
-        driver.get("https://youtube.com");
-        String title = driver.getTitle();
-        WebElement search = driver.findElement(By.name("search_query"));
+    public void testIframeW3school(){
+        driver.get("https://www.w3schools.com/html/html_iframe.asp");
+        driver.switchTo().frame(driver.findElement(iframe));
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
+        driver.findElement(By.cssSelector("a[title='CSS Tutorial']")).click();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
 
-        search.sendKeys("rush");
-        search.submit();
-
-        //Implicit wait
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
-
-        WebElement song = driver.findElement(By.cssSelector("a[href=\"/watch?v=crtQSTYWtqE\"]"));
-        song.click();
-
-        // Verify
-        Assert.assertEquals("YouTube", title);
+        //Assert.assertTrue(driver.findElement(titleCss).isDisplayed());
     }
 
-    /**
-     * This is to close the browser and finish the session
-     */
     @AfterTest
-    void tearDown() {
+    public void tearDown(){
         driver.quit();
     }
 }
